@@ -19,7 +19,7 @@ function App() {
   const [selectedLv,setSelectedLv]=useState(0);
   const [gameState,setGameState]=useState(0);
   //============================================ Embedded Components
-  function levelSelect() {
+  function LevelSelect() {
       function lvButton(num) {
         const goToLv = () => {
           setGameState(1);
@@ -53,6 +53,7 @@ function App() {
     console.log(docSnap.data());
   }
 
+
   //======================================================== On Load
   useEffect(() => {
     testFunc();
@@ -65,7 +66,11 @@ function App() {
         Where's Waldo?
       </div>
       <div id="content">
-        {(gameState==0)?levelSelect():LvHandler(selectedLv)}
+        {gameState == 0 ? (
+          <LevelSelect />
+        ) : (
+          <LvHandler selectedLv={selectedLv} setGameState={setGameState} />
+        )}
       </div>
       <div id="footer" class="centerMe">
         <i class="fab fa-github"></i>
@@ -78,4 +83,8 @@ function App() {
 }
 
 export default App;
+
+function HelloComponent(){
+  return <div>hello</div>
+}
 
