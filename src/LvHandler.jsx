@@ -17,6 +17,7 @@ import {
 export default function LvHandler(props) {
   //==================================================== Var & States
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [mousePos,setMousePos]=useState({x:0,y:0});
   const [dm, sdm] = useState('');
   const [menuActive, setMenuActive] = useState(0);
   const [isFound, setIsFound] = useState([false, false, false])
@@ -26,7 +27,7 @@ export default function LvHandler(props) {
     const targetName = props.lvData[1].targets[miniProps.id];
     function itemClick() {
       const output = { name: targetName, x: pos.x, y: pos.y };
-      sdm('Looking for ' + output.name + ' in ' + output.x + ',' + output.y);
+      sdm('Checking...'+String(output));
       console.log(output);
       setMenuActive(0);
       queryFireBase(output, miniProps.id);
@@ -41,11 +42,10 @@ export default function LvHandler(props) {
   }
   function foundTarget(id) {
     const targetName = props.lvData[1].targets[id];
-    sdm("You Found " + targetName + "!!");
     let tempArr = isFound;
     tempArr[id] = true;
     setIsFound(tempArr);
-    
+    sdm("You Found " + targetName + "!!");
     winChecker();
   }
   async function queryFireBase(input, id) {
@@ -80,9 +80,16 @@ export default function LvHandler(props) {
     const rect = document.querySelector('#gamePlayContainer').getBoundingClientRect();
     const miniMenu = document.querySelector("#miniMenu");
     setMenuActive(1);
-    const posX = e.pageX - rect.x;
-    const posY = e.pageY - rect.y;
-    setPos({ x: posX, y: posY });
+    const posX = (e.pageX - rect.x)/(rect.right-rect.x)*100;
+    const posY = (e.pageY - rect.y)/(rect.bottom - rect.y) * 100;
+    setPos({
+      x: posX ,
+      y: posY,
+    });
+    setMousePos({
+      x: posX / 100 * (rect.right - rect.x),
+      y: posY / 100 * (rect.bottom - rect.y),
+    });
     sdm(`${Math.round(posX)},${Math.round(posY)}`);
   };
 
@@ -91,55 +98,59 @@ export default function LvHandler(props) {
   return (
     <div class="gameContainer">
       <div class="gameBar">
-        {(isFound[0]) ? null : <div>
-          <img
-            src={props.lvData[props.selectedLv].targetsImg[0]}
-            alt={props.lvData[props.selectedLv].targets[0]}
-          ></img>
-          {props.lvData[props.selectedLv].targets[0]}
-        </div>}
-        {(isFound[2]) ? null : <div>
-          <img
-            src={props.lvData[props.selectedLv].targetsImg[1]}
-            alt={props.lvData[props.selectedLv].targets[1]}
-          ></img>
-          {props.lvData[props.selectedLv].targets[1]}
-        </div>}
-        {(isFound[2]) ? null : <div>
-          <img
-            src={props.lvData[props.selectedLv].targetsImg[2]}
-            alt={props.lvData[props.selectedLv].targets[2]}
-          ></img>
-          {props.lvData[props.selectedLv].targets[2]}
-        </div>}
+        {isFound[0] ? null : (
+          <div>
+            <img
+              src={props.lvData[props.selectedLv].targetsImg[0]}
+              alt={props.lvData[props.selectedLv].targets[0]}
+            ></img>
+            {props.lvData[props.selectedLv].targets[0]}
+          </div>
+        )}
+        {isFound[1] ? null : (
+          <div>
+            <img
+              src={props.lvData[props.selectedLv].targetsImg[1]}
+              alt={props.lvData[props.selectedLv].targets[1]}
+            ></img>
+            {props.lvData[props.selectedLv].targets[1]}
+          </div>
+        )}
+        {isFound[2] ? null : (
+          <div>
+            <img
+              src={props.lvData[props.selectedLv].targetsImg[2]}
+              alt={props.lvData[props.selectedLv].targets[2]}
+            ></img>
+            {props.lvData[props.selectedLv].targets[2]}
+          </div>
+        )}
         <div>{dm}</div>
         <button onClick={() => props.setGameState(0)}>Quit game</button>
-
       </div>
       <div class="gameLvContainer">
-        <div id='miniMenuOverlay' onClick={() => setMenuActive(0)} style={{
-          transform: "scale(" + menuActive + ")",
-        }}></div>
+        <div
+          id="miniMenuOverlay"
+          onClick={() => setMenuActive(0)}
+          style={{
+            transform: "scale(" + menuActive + ")",
+          }}
+        ></div>
         <div
           id="miniMenu"
           style={{
-            left: pos.x,
-            top: pos.y,
+            left: mousePos.x,
+            top: mousePos.y,
             transform: "scale(" + menuActive + ")",
           }}
         >
-          <MiniMenuItem id={0} lv={props.selectedLv} />
-          <MiniMenuItem id={1} lv={props.selectedLv} />
-          <MiniMenuItem id={2} lv={props.selectedLv} />
+          {isFound[0] ? null : <MiniMenuItem id={0} lv={props.selectedLv} />}
+          {isFound[1] ? null : <MiniMenuItem id={1} lv={props.selectedLv} />}
+          {isFound[2] ? null : <MiniMenuItem id={2} lv={props.selectedLv} />}
         </div>
-        <div id='gamePlayContainer' onClick={imgClickFunc}>
-          <img
-            src={props.lvData[props.selectedLv].lvImg}
-            alt="level"
-          ></img>
-
+        <div id="gamePlayContainer" onClick={imgClickFunc}>
+          <img src={props.lvData[props.selectedLv].lvImg} alt="level"></img>
         </div>
-
       </div>
     </div>
   );
