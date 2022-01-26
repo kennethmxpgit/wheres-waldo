@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { app, db } from "./firebase-config";
 import {
-  set,
+  addDoc,
   collection,
   doc,
   add,
@@ -22,13 +22,38 @@ export default function LvHandler(props) {
   const [menuActive, setMenuActive] = useState(0);
   const [isFound, setIsFound] = useState([false, false, false])
   const [time, setTime] = useState(0);
+  const [isOver, setIsOver] = useState(0);
+  const [winTime, setWinTime] = useState('');
   //============================================= Embedded Components
-  function Clock(){
-    let clockHours=Math.floor(time/3600)
-    let clockMinutes=Math.floor(time/60)
-    let clockSeconds=time%60;
+  function GameOverScreen() {
+    function onSaveClick() {
+      const dateNow=new Date();
+      const tb = document.querySelector('input');
+      sdm('Saving time as ' + tb.value+"at "+dateNow);
+      const recordOutput = { t: winTime, name: tb.value, at:dateNow }
+      saveRecordToServer(recordOutput);
+    }
+    return (
+      <div class='centerMe' id="gameOverScreenOverlay" style={{
+        transform: "scale(" + isOver + ")",
+      }}>
+        <div id="gameOverScreen" class='centerMe'>
+          <div class='bigText'>You Won!</div>
+          <div class='smallText'>Your time is {timeConverter(winTime)}</div>
+          <div class='smallText'>Save your record ?</div>
+          <div><input placeholder="Name"></input></div>
+          <div><button onClick={onSaveClick}>Save Record</button></div>
+          <div><button onClick={() => props.setGameState(0)}>Play Again</button></div>
+        </div>
+      </div>
+    )
+  }
+  function timeConverter(input) {
+    let clockHours = Math.floor(input / 3600)
+    let clockMinutes = Math.floor(input / 60)
+    let clockSeconds = input % 60;
     return String(
-      clockHours+'h'+clockMinutes+'m'+clockSeconds+'s'
+      clockHours + 'h' + clockMinutes + 'm' + clockSeconds + 's'
     )
   }
   function MiniMenuItem(miniProps) {
@@ -44,8 +69,22 @@ export default function LvHandler(props) {
   }
 
   //======================================================= Functions
+  async function saveRecordToServer(input){
+    try{
+      const colRef = collection(db, "levels", String(props.selectedLv), 'records');
+      const newDocRef=doc(colRef);
+      await addDoc(colRef, input);
+      props.setGameState(0);
+    } catch(err){
+      console.log(err);
+    }
+  }
   function winChecker() {
-    if (isFound[0] && isFound[1] && isFound[2]) props.setGameState(0);
+    if (isFound[0] && isFound[1] && isFound[2]) {
+      setWinTime(time);
+      setIsOver(1);
+      sdm('');
+    };
     console.log('whichecker');
   }
   function foundTarget(id) {
@@ -79,12 +118,13 @@ export default function LvHandler(props) {
   }
   //======================================================== On Load
   useEffect(() => {
-    let tempTime=0;
-    setInterval(()=>{
+    let tempTime = 0;
+    setInterval(() => {
       tempTime++;
       setTime(tempTime);
-      console.log(time);
     }, 1000)
+    //test database
+    //saveRecordToServer({name:"jacko",t:450,at:'herez'});
   }, []);
 
 
@@ -105,11 +145,10 @@ export default function LvHandler(props) {
     });
     sdm(`${Math.round(posX)},${Math.round(posY)}`);
   };
-
-
   //======================================================== Return
   return (
     <div class="gameContainer">
+      {GameOverScreen()}
       <div class="gameBar">
         <div id='toFindContainer'>
           {isFound[0] ? <div></div> : (
@@ -141,7 +180,7 @@ export default function LvHandler(props) {
           )}
         </div>
         <div id='timerContainer'>
-          <Clock/>
+          {(isOver) ? null : timeConverter(time)}
         </div>
         <div id='msgContainer'>{dm}</div>
         <button onClick={() => props.setGameState(0)}>Quit</button>

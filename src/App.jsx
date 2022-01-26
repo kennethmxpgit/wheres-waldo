@@ -1,12 +1,45 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import LvHandler from './LvHandler';
+import { app, db } from "./firebase-config";
+import {
+  addDoc,
+  collection,
+  doc,
+  add,
+  update,
+  get,
+  data,
+  getDoc,
+  getDocs,
+  where,
+  query
+} from "firebase/firestore";
 
 function App() {
   //
   //================================================== Var & States 
-  const [selectedLv,setSelectedLv]=useState(0);
-  const [gameState,setGameState]=useState(0);
+  const emptyHighScoreList=    [
+    [
+      {name:'Empty',t:400,at:''},
+      {name:'Empty',t:400,at:''},
+      {name:'Empty',t:400,at:''}
+    ],
+    [
+      {name:'Empty',t:400,at:''},
+      {name:'Empty',t:400,at:''},
+      {name:'Empty',t:400,at:''}
+    ],
+    [
+      {name:'Empty',t:400,at:''},
+      {name:'Empty',t:400,at:''},
+      {name:'Empty',t:400,at:''}
+    ],
+  ];
+  const [highScoreList, setHighScoreList] = useState(emptyHighScoreList
+  );
+  const [selectedLv, setSelectedLv] = useState(0);
+  const [gameState, setGameState] = useState(0);
   const lvData = [
     "",
     {
@@ -20,29 +53,59 @@ function App() {
     },
   ]; //levelData[1] corresponds to level1
   //============================================ Embedded Components
+  async function loadHighScore(input) {
+    const colRef = collection(db, "levels", String(input), 'records');
+    const querySnapshot = await getDocs(colRef);
+    const tempArr=[[],[],[]];
+    querySnapshot.forEach((doc,index) => {
+      tempArr[input].push(doc.data());
+    });
+    tempArr[input].sort(function (a, b) {
+      return a.t - b.t;
+    });
+    setHighScoreList(tempArr);
+    console.log(highScoreList);
+  }
   function LevelSelect() {
-      function lvButton(num) {
-        const goToLv = () => {
-          setGameState(1);
-          setSelectedLv(num);
-          console.log('Going to level : '+num);
-        };
-        return (
-          <div class='levelButton centerMe'>
-            <button onClick={goToLv}>Level : {num}</button>
+    function lvButton(num) {
+      const goToLv = () => {
+        setGameState(1);
+        setSelectedLv(num);
+        console.log('Going to level : ' + num);
+      };
+      return (
+        <div class='lvSelectItem'>
+          <img src={lvData[1].lvImg} alt="level" onClick={goToLv}></img>
+          <div class='centerMe'>Level : {num}</div>
+          <div class='centerMe'>High Score : </div>
+          <div id="highScoreItemContainer">
+          {highScoreList[1].map((el)=>
+          <div class='highScoreItem'>
+            <div>{el.name}</div>
+            <div>{el.t}s</div>
+            </div>)}
           </div>
-        )
-      }
+
+        </div>
+      )
+    }
     return (
       <div>
         <div class="header1">Select a level to start the game</div>
         <div class="levelContainer centerMe">
           {lvButton(1)}
-          {lvButton(2)}
         </div>
       </div>
     );
   }
+  //======================================================= On Load
+  useEffect(() => {
+    setHighScoreList(emptyHighScoreList);
+  }, [])
+  useEffect(() => {
+    setHighScoreList(emptyHighScoreList);
+    loadHighScore(1);
+  }, [gameState])
   //========================================================= Return
   return (
     <div>
@@ -53,7 +116,7 @@ function App() {
         {gameState == 0 ? (
           <LevelSelect />
         ) : (
-          <LvHandler selectedLv={selectedLv} setGameState={setGameState} lvData={lvData}/>
+          <LvHandler selectedLv={selectedLv} setGameState={setGameState} lvData={lvData} />
         )}
       </div>
       <div id="footer" class="centerMe">
@@ -68,7 +131,7 @@ function App() {
 
 export default App;
 
-function HelloComponent(){
+function HelloComponent() {
   return <div>hello</div>
 }
 

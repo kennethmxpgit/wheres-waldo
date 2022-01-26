@@ -10,7 +10,7 @@ img {
   -khtml-user-drag: none; 
   -moz-user-drag: none; 
   -o-user-drag: none; 
-  user-drag: none; 
+  user-drag: none;
 }
 * { 
 	box-sizing: border-box;
@@ -52,15 +52,14 @@ body {
   color:white;
 }
 .header1{
-  font-size:300%;
+  font-size:200%;
   text-align:center;
-  padding:5% 0 5% 0;
+  padding:2% 0 2% 0;
 }
 .levelContainer{
   padding:5%;
   gap:5%;
-  flex-wrap: wrap;
-}
+  flex-wrap: wrap;}
 .levelButton{
   padding:5%;
 }
@@ -109,7 +108,7 @@ body {
   position:absolute;
   top:0;
   left:0;
-  width:1000px;
+  width:1300px;
   max-width:150%;
 }
 #gamePlayContainer img{
@@ -124,7 +123,7 @@ body {
 
 #toFindContainer{
   display:flex;
-  width:20%;
+  width:12rem;
   gap:3%;
   align-items: center;
   padding:0 1% 0 1%;
@@ -137,7 +136,7 @@ body {
 }
 #toFindContainer div img{
   height:fit-content;
-  width:3vw;
+  width:3rem;
   min-width:25px;
 }
 .gameBar button{
@@ -146,12 +145,14 @@ body {
   font-style:inherit;
   width:10%;
   height:100%;
+  border-style:none;
 }
 .gameBar button:hover{
   background-color:rgb(240, 240, 240);
 }
 #timerContainer{
   height:100%;
+  width:5rem;
   display:flex;
   align-items: center;
 }
@@ -160,4 +161,70 @@ body {
   width:10%;
   display:flex;
   align-items: center;
+}
+
+#gameOverScreenOverlay{
+  position:absolute;
+  background-color:rgba(0, 0, 0, 0.692);
+  z-index:10;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  transform:scale(0.2);
+}
+
+#gameOverScreen{
+  color:white;
+  flex-direction:column;
+}
+
+.bigText{
+  font-size:5rem;
+}
+
+#gameOverScreen input{
+  margin-top:5%;
+  color:black;
+}
+
+#gameOverScreen button{
+  margin-top:5%;
+  width:10rem;
+  height:5rem;
+  background-color:inherit;
+  font-family: inherit;
+  font-size:1.3em;
+}
+
+#lvSelectContainer{
+  border-style:solid;
+}
+.lvSelectItem{
+  height:10rem;
+  width:10rem;
+  /* border-style:solid; */
+
+}
+
+.lvSelectItem img{
+  height:100%;
+  width:100%;  
+}
+.lvSelectItem img:hover{
+  filter:brightness(0.8);
+}
+
+
+.highScoreItem {
+  display:flex;
+}
+.highScoreItem div{
+  flex:1;
+  text-align: left;
+}
+
+#highScoreItemContainer{
+  overflow-y:scroll;
+  height:5em;
 }
