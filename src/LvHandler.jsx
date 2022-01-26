@@ -17,17 +17,25 @@ import {
 export default function LvHandler(props) {
   //==================================================== Var & States
   const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [mousePos,setMousePos]=useState({x:0,y:0});
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [dm, sdm] = useState('');
   const [menuActive, setMenuActive] = useState(0);
   const [isFound, setIsFound] = useState([false, false, false])
-
+  const [time, setTime] = useState(0);
   //============================================= Embedded Components
+  function Clock(){
+    let clockHours=Math.floor(time/3600)
+    let clockMinutes=Math.floor(time/60)
+    let clockSeconds=time%60;
+    return String(
+      clockHours+'h'+clockMinutes+'m'+clockSeconds+'s'
+    )
+  }
   function MiniMenuItem(miniProps) {
     const targetName = props.lvData[1].targets[miniProps.id];
     function itemClick() {
       const output = { name: targetName, x: pos.x, y: pos.y };
-      sdm('Checking...'+String(output));
+      sdm('Checking...');
       console.log(output);
       setMenuActive(0);
       queryFireBase(output, miniProps.id);
@@ -36,8 +44,8 @@ export default function LvHandler(props) {
   }
 
   //======================================================= Functions
-  function winChecker(){
-    if(isFound[0]&&isFound[1]&&isFound[2]) props.setGameState(0);
+  function winChecker() {
+    if (isFound[0] && isFound[1] && isFound[2]) props.setGameState(0);
     console.log('whichecker');
   }
   function foundTarget(id) {
@@ -71,7 +79,12 @@ export default function LvHandler(props) {
   }
   //======================================================== On Load
   useEffect(() => {
-    //sample input right {name: 'Waldo', x: 703, y: 500.359375}
+    let tempTime=0;
+    setInterval(()=>{
+      tempTime++;
+      setTime(tempTime);
+      console.log(time);
+    }, 1000)
   }, []);
 
 
@@ -80,10 +93,10 @@ export default function LvHandler(props) {
     const rect = document.querySelector('#gamePlayContainer').getBoundingClientRect();
     const miniMenu = document.querySelector("#miniMenu");
     setMenuActive(1);
-    const posX = (e.pageX - rect.x)/(rect.right-rect.x)*100;
-    const posY = (e.pageY - rect.y)/(rect.bottom - rect.y) * 100;
+    const posX = (e.pageX - rect.x) / (rect.right - rect.x) * 100;
+    const posY = (e.pageY - rect.y) / (rect.bottom - rect.y) * 100;
     setPos({
-      x: posX ,
+      x: posX,
       y: posY,
     });
     setMousePos({
@@ -98,35 +111,40 @@ export default function LvHandler(props) {
   return (
     <div class="gameContainer">
       <div class="gameBar">
-        {isFound[0] ? null : (
-          <div>
-            <img
-              src={props.lvData[props.selectedLv].targetsImg[0]}
-              alt={props.lvData[props.selectedLv].targets[0]}
-            ></img>
-            {props.lvData[props.selectedLv].targets[0]}
-          </div>
-        )}
-        {isFound[1] ? null : (
-          <div>
-            <img
-              src={props.lvData[props.selectedLv].targetsImg[1]}
-              alt={props.lvData[props.selectedLv].targets[1]}
-            ></img>
-            {props.lvData[props.selectedLv].targets[1]}
-          </div>
-        )}
-        {isFound[2] ? null : (
-          <div>
-            <img
-              src={props.lvData[props.selectedLv].targetsImg[2]}
-              alt={props.lvData[props.selectedLv].targets[2]}
-            ></img>
-            {props.lvData[props.selectedLv].targets[2]}
-          </div>
-        )}
-        <div>{dm}</div>
-        <button onClick={() => props.setGameState(0)}>Quit game</button>
+        <div id='toFindContainer'>
+          {isFound[0] ? <div></div> : (
+            <div>
+              <img
+                src={props.lvData[props.selectedLv].targetsImg[0]}
+                alt={props.lvData[props.selectedLv].targets[0]}
+              ></img>
+              {props.lvData[props.selectedLv].targets[0]}
+            </div>
+          )}
+          {isFound[1] ? <div></div> : (
+            <div>
+              <img
+                src={props.lvData[props.selectedLv].targetsImg[1]}
+                alt={props.lvData[props.selectedLv].targets[1]}
+              ></img>
+              {props.lvData[props.selectedLv].targets[1]}
+            </div>
+          )}
+          {isFound[2] ? <div></div> : (
+            <div>
+              <img
+                src={props.lvData[props.selectedLv].targetsImg[2]}
+                alt={props.lvData[props.selectedLv].targets[2]}
+              ></img>
+              {props.lvData[props.selectedLv].targets[2]}
+            </div>
+          )}
+        </div>
+        <div id='timerContainer'>
+          <Clock/>
+        </div>
+        <div id='msgContainer'>{dm}</div>
+        <button onClick={() => props.setGameState(0)}>Quit</button>
       </div>
       <div class="gameLvContainer">
         <div
