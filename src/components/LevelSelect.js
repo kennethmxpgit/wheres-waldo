@@ -57,7 +57,7 @@ export default function LevelSelect() {
 
             }}
             >
-        <CardActionArea>
+        <CardActionArea href="/play">
             <CardMedia
             component="img"
             height={cardHeight}

@@ -8,7 +8,7 @@ export default function Home(homeImg){
     display="flex"
     alignItems="center"
     justifyContent="center"
-    width="100%"
+    width="100vw"
     flexDirection="column">
         <Box
         component="img"

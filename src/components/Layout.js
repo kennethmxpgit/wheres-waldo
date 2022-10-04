@@ -17,11 +17,6 @@ export default function Layout(){
               <Route exact path={'/play'} element={<Play/>}/>
             </Routes>
           </Box>
-        <Box height="5vh" display="flex"
-    justifyContent="center"
-    alignItems="center">
-        <GitHubIcon color="white"/> <Box color="primary">kennethmxpgit</Box>
-          </Box>
   
       </div>
     )
