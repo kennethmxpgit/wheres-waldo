@@ -1,9 +1,8 @@
-import Image from 'material-ui-image'
 import WaldoHome from '../images/waldohome.png'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-export default function Home(){
+export default function Home(homeImg){
 
     return <Box
     display="flex"
@@ -17,8 +16,11 @@ export default function Home(){
           maxWidth: { xs: 350, md: 700 },
           pb:5
         }}
-        alt="The house from the offer."
-        src={WaldoHome}      />
+        alt="Waldo welcoming"
+        src={WaldoHome}      
+        loading="eager"
+        />
+        
 
 <Button variant="contained" size="large" color="error" href="/level">Start Game</Button>
 
