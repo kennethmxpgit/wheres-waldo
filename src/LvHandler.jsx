@@ -55,6 +55,7 @@ export default function LvHandler(props) {
           ></img>
           {lvData[props.selectedLv].targets[2]}
         </div>
+        <div>test text</div>
         <button onClick={()=>props.setGameState(0)}>Quit game</button>
 
       </div>

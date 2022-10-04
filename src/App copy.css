@@ -1,0 +1,124 @@
+:root {
+  --red: #D9534F;
+  --white: #ffffff;
+  --green:#96CEB4;
+  --orange:#FFAD60;
+  --yellow:#FFEEAD;
+}
+img { 
+  -webkit-user-drag: none; 
+  -khtml-user-drag: none; 
+  -moz-user-drag: none; 
+  -o-user-drag: none; 
+  user-drag: none; 
+}
+* { 
+	box-sizing: border-box;
+  text-decoration: inherit;
+  color:inherit;
+  font-family: 'Open Sans', sans-serif;
+  user-select:none;
+}
+html, body {
+	min-height: 100%;
+}
+	
+body {
+	text-rendering: optimizeLegibility;
+}
+
+.centerMe{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fitToContent{
+  height:100%;
+  width:100%;
+}
+#header{
+  background-color: var(--red);
+  height:10vh;
+  color:white;
+  font-size:300%;
+}
+#content{
+  height:86vh;
+}
+#footer{
+  background-color: var(--red);
+  height:4vh;
+  color:white;
+}
+.header1{
+  font-size:300%;
+  text-align:center;
+  padding:5% 0 5% 0;
+}
+.levelContainer{
+  padding:5%;
+  gap:5%;
+  flex-wrap: wrap;
+}
+.levelButton{
+  padding:5%;
+}
+.gameContainer{
+
+  height:100%;
+}
+.gameBar{
+  height:12%;
+  display:flex;
+  gap:1%;
+  align-items: center;
+}
+.gameBar button{
+  margin-left:auto;
+  background-color:inherit;
+  font-style:inherit;
+  width:10%;
+  height:100%;
+  border-style:none;
+}
+.gameBar button:hover{
+  background-color:rgb(240, 240, 240);
+}
+
+.gameBar div{
+  display:flex;
+  flex-direction: column;
+  margin-left:2%;
+}
+.gameBar div img{
+  height:3.2rem;
+}
+.gameLvContainer{
+  position:relative;
+  height:88%;
+  overflow:auto;
+  padding:0;
+  margin:0;
+}
+.gameLvContainer img{
+  width:100%;
+}
+
+#miniMenu{
+  position:sticky;
+  left:0px;
+  top:0px;
+  background-color: var(--white);
+  width:7vw;
+  z-index: 10;
+  border-radius: 4%;
+  transform:scale(1);
+}
+#miniMenu div{
+  padding:5%;
+}
+#miniMenu div:hover{
+  background-color: rgb(240, 240, 240);
+}
+
