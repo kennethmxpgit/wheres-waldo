@@ -8,7 +8,8 @@ import Link from '@mui/material/Link';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import barLogo from '../images/barlogo.svg'
+import barLogo from '../images/barlogo.svg';
+import Checklist from './Checklist.js';
 
 
 // export default function ButtonAppBar() {

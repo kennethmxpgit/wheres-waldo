@@ -3,39 +3,30 @@ import Waldo from "../images/Waldo.jpg"
 
 
 export default function Checklist(){
-    return <Box height="0">
-            <Paper elevation={5} sx={{
-        position:"relative",
-        top:{xs:"0.5rem",md:"0.5rem"},
-        left:"1rem",
-        height:"5rem",
-        width:"13rem",
-        zIndex:"1",
+    return <Box
+    width="100%"
+    height="0"
+    sx={{
+        backgroundColor:"gray",
         display:"flex",
         alignItems:"center",
-        justifyContent:"center",
-        pointerEvents:"none",
-        userSelect:"none"
-    }}>
-    <Box paddingX="4%">
-        
-    <Avatar src={Waldo} />
-    Waldo
-    </Box>
+        justifyContent:"center"
+    }}
+    >
+        <Box sx={{
+                backgroundColor:"white",
+                display:"flex",
+                borderRadius: "1rem",
+                padding:"0.3rem",
+                zIndex:"1"
 
-    <Box paddingX="4%">
-    <Avatar alt="Remy Sharp" src={Waldo} />
-    Waldo
-    </Box>
-
-    <Box paddingX="4%">
-    <Avatar alt="Remy Sharp" src={Waldo} />
-    Waldo
-    </Box>
-        </Paper>
-
+            }}
+        >
+            <Avatar src={Waldo}/>
+            <Avatar src={Waldo}/>
+            <Avatar src={Waldo}/>
+        </Box>
 
     </Box>
-    
 
 }
