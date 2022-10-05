@@ -20,32 +20,35 @@ import { maxHeight } from '@mui/system';
 export default function Play(){
     const [coords, setCoords] = useState({x: 0, y: 0});
     const [localCoords, setLocalCoords] = useState({x: 0, y: 0});
-    const [globalCoords, setGlobalCoords] = useState({x: 0, y: 0});
+    const [testCoords, setTestCoords] = useState({x: 0, y: 0});
+    const [menuOn, setMenuOn]=useState(false);
     useEffect(() => {
-        // 👇️ get global mouse coordinates
-        const handleWindowMouseMove = event => {
-          setGlobalCoords({
-            x: event.screenX,
-            y: event.screenY,
-          });
-        };
-        window.addEventListener('mousemove', handleWindowMouseMove);
-    
-        return () => {
-          window.removeEventListener('mousemove', handleWindowMouseMove);
-        };
+
       }, []);
-    
+
+
+      const mapClickHandler =(event)=>{
+        setMenuOn(!menuOn)
+        const bounds = event.target.getBoundingClientRect()
+        setLocalCoords({
+          x:event.clientX-bounds.left,
+          y:event.clientY-bounds.top
+      })
+      setCoords({
+        x: Math.round((event.clientX-bounds.left)/(bounds.right-bounds.left)*10000)/100,
+        y: Math.round((event.clientY-bounds.top)/(bounds.bottom-bounds.top)*10000)/100,
+      });
+      }
+
+
+
       const handleMouseMove = event => {
         const bounds = event.target.getBoundingClientRect()
-        setCoords({
-          x: Math.round((event.clientX-bounds.left)/(bounds.right-bounds.left)*100),
-          y: Math.round((event.clientY-bounds.top)/(bounds.bottom-bounds.top)*100),
+        setTestCoords({
+          x: Math.round((event.clientX-bounds.left)/(bounds.right-bounds.left)*10000)/100,
+          y: Math.round((event.clientY-bounds.top)/(bounds.bottom-bounds.top)*10000)/100,
         });
-        setLocalCoords({
-            x:event.clientX-bounds.left,
-            y:event.clientY-bounds.top
-        })
+
       };
 
 
@@ -55,6 +58,7 @@ export default function Play(){
 
     return <Box 
     display="flex"
+    
     flexDirection="column"
     alignItems="sretch"
     justifyContent="stretch"
@@ -62,12 +66,12 @@ export default function Play(){
         <TopBar/>
         <Checklist/>
         <DebugDisplay txt={
-            "Local X:"+localCoords.x+" Y:"+localCoords.y
+            "Hit X:"+coords.x+" Y:"+coords.y
         }
 
         txt2={
-            " X : "+coords.x+
-            " Y : "+coords.y
+            " X : "+testCoords.x+
+            " Y : "+testCoords.y
         }
         />
         <Box
@@ -77,6 +81,7 @@ export default function Play(){
         display="flex"
         alignItems="center"
         justifyContent="center"
+        
         >
 
         <Box
@@ -85,12 +90,14 @@ export default function Play(){
         height="82vh"
         
         >
-            <Selector mouseX='23' mouseY='21'/>
+            <Selector menuVisible={menuOn} mouseX={localCoords.x} mouseY={localCoords.y} hitX={coords.x} hitY={coords.y} setMenuOn={setMenuOn}/>
             <Box
         component="img"
         src={lv3img}
         loading="eager"
         onMouseMove={handleMouseMove}
+        onClick={mapClickHandler}
+        
         width="1000px"
         />
         </Box>
