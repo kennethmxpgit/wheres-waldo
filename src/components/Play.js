@@ -17,6 +17,8 @@ import { lvInfo } from './lvInfo';
 import WinScreen from './WinScreen';
 
 
+
+
 export default function Play(){
   const params= useParams()
   const levelID=params.id
@@ -27,7 +29,19 @@ export default function Play(){
     const [testCoords, setTestCoords] = useState({x: 0, y: 0});
     const [menuOn, setMenuOn]=useState(false);
     const [isFound, setIsFound]=useState([false,false,false]);
-    const [gameWon, setGameWon]=useState(false);
+    const [counter, setCounter] = useState(2);
+    const [gameWon,setGameWon] = useState(false);
+    let finishTime;
+
+
+    //Timer function and also game win checker
+    useEffect(() => {
+
+      if(isFound[0]&&isFound[1]&&isFound[2]){
+        setGameWon(true)
+      }
+      if(!gameWon) setTimeout(() => setCounter(counter + 1), 1000);
+    }, [counter]);
 
       const mapClickHandler =(event)=>{
         setMenuOn(!menuOn)
@@ -59,8 +73,10 @@ export default function Play(){
     alignItems="sretch"
     justifyContent="stretch"
     height="100vh">
-      <WinScreen gameWon={isFound[0]&&isFound[1]&&isFound[2]}/>
-        <TopBar/>
+      <WinScreen gameWon={gameWon} finishTime={counter}
+      levelID={levelID}
+      />
+        <TopBar/>        
         <Checklist levelID={levelID} isFound={isFound}/>
         <DebugDisplay txt={
             "Hit X:"+coords.x+" Y:"+coords.y
@@ -101,6 +117,7 @@ export default function Play(){
         onMouseMove={handleMouseMove}
         onClick={mapClickHandler}
         borderRadius="1rem"
+        // minHeight="80vh"
         
         width="1000px"
         />

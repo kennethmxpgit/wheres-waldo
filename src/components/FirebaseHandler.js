@@ -8,9 +8,11 @@ import {
   update,
   get,
   data,
-  getDoc,getDocs,
+  getDoc,getDocs,addDoc,
   getFirestore,
+  setDoc,
 } from "firebase/firestore";
+
 
 export async function LeaderboardCall(){
   //returns all the leaderboards into one array/object
@@ -62,4 +64,12 @@ export async function HitChecker(levelID,target,x,y){
     console.log("MISS")
     return false
   }
+}
+
+export async function saveToLeaderboard(levelID,name,time){
+  console.log("Adding to database : ",name," t:",time)
+  await addDoc(collection(db, "levels", String(levelID),"records"), {
+    name: name,
+    t: time,
+  });
 }

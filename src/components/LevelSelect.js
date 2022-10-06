@@ -93,7 +93,7 @@ export default function LevelSelect() {
 
             }}
             >
-        <CardActionArea href="/play/1">
+        <CardActionArea href="/#/play/1">
             <CardMedia
             component="img"
             height={cardHeight}
@@ -119,7 +119,7 @@ export default function LevelSelect() {
 
             <Grid item>
             <Card sx={{ maxWidth: 180 }}>
-        <CardActionArea href="/play/2">
+        <CardActionArea href="/#/play/2">
             <CardMedia
             component="img"
             height={cardHeight}
@@ -131,7 +131,7 @@ export default function LevelSelect() {
                 Level 2
             </Typography>
             <Typography variant="body2" color="text.secondary">
-                The Picnic
+                The Museum
             </Typography>
             </CardContent>
         </CardActionArea >
@@ -145,7 +145,7 @@ export default function LevelSelect() {
 
             <Grid item>
             <Card sx={{ maxWidth: 180 }}>
-        <CardActionArea href="/play/3">
+        <CardActionArea href="/#/play/3">
             <CardMedia
             component="img"
             height={cardHeight}
