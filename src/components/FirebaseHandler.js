@@ -12,28 +12,8 @@ import {
   getFirestore,
 } from "firebase/firestore";
 
-// export default function FirebaseHandler(){
-//     async function testFunc() {
-//         const docRef = doc(db, "tests", "test");
-//         const docSnap = await getDoc(docRef);
-//         console.log(docSnap.data());
-//       }
-
-//       async function testFunc2(){
-//         const docRef = await collection(db,"levels","1","records")
-//         const docSnap = await getDocs(docRef); 
-//         docSnap.forEach((doc)=>{
-//             console.log(doc.data().name)
-//         })
-//       }
-//       useEffect(() => {
-//         testFunc();
-//       }, []);
-//       return null;
-// }
-
 export async function LeaderboardCall(){
-
+  //returns all the leaderboards into one array/object
   let docRef,docSnap
   const outputObject=[[],[],[]
   ]
@@ -61,15 +41,25 @@ export async function LeaderboardCall(){
         time:doc.data().t
       })
   })
-  
 
   return outputObject;
+}
 
-
-
-
-
-
-  console.log(outputObject)
-
+export async function HitChecker(levelID,target,x,y){
+  //calls target coordinate. checks it with the input coordinate.returns true or false
+  //props : levelID, target(0-2), x,y
+  let docRef,docSnap,refX,refY
+  const tol=3 // tolerance hitbox
+  docRef = await doc(db, "levels",levelID,"targets",target);
+  docSnap = await getDoc(docRef);
+  refX=docSnap.data().x
+  refY=docSnap.data().y
+  // console.log(levelID, target,x,y)
+  if((x<refX+tol&&x>refX-tol)&&(y<refY+tol&&y>refY-tol)){
+     console.log("HIT")
+     return true
+  } else {
+    console.log("MISS")
+    return false
+  }
 }

@@ -1,6 +1,8 @@
 import { Box,Button,Paper,Avatar } from '@mui/material';
 import Waldo from "../images/Waldo.jpg"
 import { lvInfo } from './lvInfo';
+import { HitChecker } from './FirebaseHandler';
+
 
 
 export default function Selector(props){
@@ -10,9 +12,10 @@ export default function Selector(props){
     const target2Effect=props.isFound[1]?"opacity(25%)":"opacity(100%)"
     const target3Effect=props.isFound[2]?"opacity(25%)":"opacity(100%)"
 
-    const clickHandler=()=>{
+     async function clickHandler(levelID,target,x,y){
         
         setTimeout(()=>{props.setMenuOn(false)},400)
+        await HitChecker(levelID,target,x,y)
     }
 
     //modifier so the small menu doesn't go out of the map container
@@ -26,6 +29,7 @@ export default function Selector(props){
     backgroundColor="gray"
     width="0"
     >
+        
         <Box 
         visibility={props.menuVisible ? "visible":"hidden"}
         backgroundColor="white" 
@@ -37,13 +41,13 @@ export default function Selector(props){
         top={props.mouseY+modifierY+"px"}
         sx={{borderRadius:"0.5rem"}}
         >
-            <Button onClick={clickHandler}>
+            <Button onClick={()=>{clickHandler(props.levelID,"1",props.hitX,props.hitY)}}>
                 <Avatar src={lvInfo[props.levelID].target1Img} sx={{filter:target1Effect}}/>
             </Button>
-            <Button onClick={clickHandler}>
+            <Button onClick={()=>{clickHandler(props.levelID,"2",props.hitX,props.hitY)}}>
                 <Avatar src={lvInfo[props.levelID].target2Img} sx={{filter:target2Effect}}/>
             </Button>
-            <Button onClick={clickHandler}>
+            <Button onClick={()=>{clickHandler(props.levelID,"3",props.hitX,props.hitY)}}>
                 <Avatar src={lvInfo[props.levelID].target3Img} sx={{filter:target3Effect}}/>
             </Button>
 

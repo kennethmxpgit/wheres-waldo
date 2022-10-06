@@ -17,8 +17,6 @@ import { lvInfo } from './lvInfo';
 import WinScreen from './WinScreen';
 
 
-
-
 export default function Play(){
   const params= useParams()
   const levelID=params.id
@@ -89,7 +87,8 @@ export default function Play(){
             <Selector 
             menuVisible={menuOn} 
             mouseX={localCoords.x} mouseY={localCoords.y} 
-            hitX={coords.x} hitY={coords.y} 
+            hitX={coords.x}
+            hitY={coords.y}
             setMenuOn={setMenuOn}
             levelID={levelID}
             isFound={isFound}          
