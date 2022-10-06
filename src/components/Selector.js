@@ -4,6 +4,12 @@ import { lvInfo } from './lvInfo';
 
 
 export default function Selector(props){
+
+    //gives isFoun
+    const target1Effect=props.isFound[0]?"opacity(25%)":"opacity(100%)"
+    const target2Effect=props.isFound[1]?"opacity(25%)":"opacity(100%)"
+    const target3Effect=props.isFound[2]?"opacity(25%)":"opacity(100%)"
+
     const clickHandler=()=>{
         
         setTimeout(()=>{props.setMenuOn(false)},400)
@@ -32,13 +38,13 @@ export default function Selector(props){
         sx={{borderRadius:"0.5rem"}}
         >
             <Button onClick={clickHandler}>
-                <Avatar src={lvInfo[props.levelID].target1Img}/>
+                <Avatar src={lvInfo[props.levelID].target1Img} sx={{filter:target1Effect}}/>
             </Button>
             <Button onClick={clickHandler}>
-                <Avatar src={lvInfo[props.levelID].target2Img}/>
+                <Avatar src={lvInfo[props.levelID].target2Img} sx={{filter:target2Effect}}/>
             </Button>
             <Button onClick={clickHandler}>
-                <Avatar src={lvInfo[props.levelID].target3Img}/>
+                <Avatar src={lvInfo[props.levelID].target3Img} sx={{filter:target3Effect}}/>
             </Button>
 
         </Box>

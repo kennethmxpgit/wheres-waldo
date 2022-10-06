@@ -8,15 +8,21 @@ import lv1img from '../images/lv1.jpg'
 import lv2img from '../images/lv2.jpg'
 import lv3img from '../images/lv3.jpg'
 import TopBar from './TopBar.js'
+import Leaderboard from './Leaderboard';
+import {useState} from 'react'
 
 export default function LevelSelect() {
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedLevel, setSelectedLevel] = useState(1);
     const cardHeight='140';
   return (
+    
     <Box
     display="flex"
     flexDirection="column"
     height="100%"
     >
+        <Leaderboard modalOpen={modalOpen} setModalOpen={setModalOpen} selectedLevel={selectedLevel}/>
     {/* background */}
     <div style={{
         overflowY:"hidden",
@@ -74,7 +80,7 @@ export default function LevelSelect() {
             </CardContent>
         </CardActionArea>
         <CardActions>
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" onClick={()=>{setModalOpen(true); setSelectedLevel(1)}}>
             LEADERBOARD
             </Button>
         </CardActions>
@@ -100,7 +106,7 @@ export default function LevelSelect() {
             </CardContent>
         </CardActionArea >
         <CardActions>
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" onClick={()=>{setModalOpen(true); setSelectedLevel(2)}}>
             LEADERBOARD
             </Button>
         </CardActions>
@@ -127,7 +133,7 @@ export default function LevelSelect() {
             </CardContent>
         </CardActionArea>
         <CardActions>
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" onClick={()=>{setModalOpen(true); setSelectedLevel(3)}}>
             LEADERBOARD
             </Button>
         </CardActions>

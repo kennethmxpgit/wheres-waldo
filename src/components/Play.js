@@ -14,6 +14,7 @@ import DebugDisplay from './DebugDisplay';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import { lvInfo } from './lvInfo';
+import WinScreen from './WinScreen';
 
 
 
@@ -27,6 +28,7 @@ export default function Play(){
     const [localCoords, setLocalCoords] = useState({x: 0, y: 0});
     const [testCoords, setTestCoords] = useState({x: 0, y: 0});
     const [menuOn, setMenuOn]=useState(false);
+    const [isFound, setIsFound]=useState([false,false,false]);
 
       const mapClickHandler =(event)=>{
         setMenuOn(!menuOn)
@@ -58,8 +60,9 @@ export default function Play(){
     alignItems="sretch"
     justifyContent="stretch"
     height="100vh">
+      <WinScreen/>
         <TopBar/>
-        <Checklist levelID={levelID}/>
+        <Checklist levelID={levelID} isFound={isFound}/>
         <DebugDisplay txt={
             "Hit X:"+coords.x+" Y:"+coords.y
         }
@@ -76,7 +79,6 @@ export default function Play(){
         display="flex"
         alignItems="center"
         justifyContent="center"
-        
         >
 
         <Box
@@ -88,7 +90,8 @@ export default function Play(){
             mouseX={localCoords.x} mouseY={localCoords.y} 
             hitX={coords.x} hitY={coords.y} 
             setMenuOn={setMenuOn}
-            levelID={levelID}          
+            levelID={levelID}
+            isFound={isFound}          
             />
             <Box
         component="img"
@@ -96,6 +99,7 @@ export default function Play(){
         loading="eager"
         onMouseMove={handleMouseMove}
         onClick={mapClickHandler}
+        borderRadius="1rem"
         
         width="1000px"
         />
