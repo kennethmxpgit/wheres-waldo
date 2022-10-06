@@ -116,10 +116,10 @@ export default function Play(){
         loading="eager"
         onMouseMove={handleMouseMove}
         onClick={mapClickHandler}
-        borderRadius="1rem"
-        // minHeight="80vh"
-        
-        width="1000px"
+        borderRadius="1rem"      
+        sx={{
+
+        }}
         />
         </Box>
 

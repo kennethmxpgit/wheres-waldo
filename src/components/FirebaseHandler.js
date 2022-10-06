@@ -8,7 +8,7 @@ import {
   update,
   get,
   data,
-  getDoc,getDocs,addDoc,
+  getDoc,getDocs,addDoc,query,orderBy,limit,
   getFirestore,
   setDoc,
 } from "firebase/firestore";
@@ -19,8 +19,9 @@ export async function LeaderboardCall(){
   let docRef,docSnap
   const outputObject=[[],[],[]
   ]
+  // docRef = await collection(db,"levels","1","records")
   docRef = await collection(db,"levels","1","records")
-  docSnap = await getDocs(docRef); 
+  docSnap = await getDocs(query(docRef, orderBy('t'),limit(10)))
   docSnap.forEach((doc)=>{
       outputObject[0].push({
         name:doc.data().name,
@@ -28,7 +29,7 @@ export async function LeaderboardCall(){
       })
   })
   docRef = await collection(db,"levels","2","records")
-  docSnap = await getDocs(docRef); 
+  docSnap = await getDocs(query(docRef, orderBy('t'),limit(10)))
   docSnap.forEach((doc)=>{
       outputObject[1].push({
         name:doc.data().name,
@@ -36,7 +37,7 @@ export async function LeaderboardCall(){
       })
   })
   docRef = await collection(db,"levels","3","records")
-  docSnap = await getDocs(docRef); 
+  docSnap = await getDocs(query(docRef, orderBy('t'),limit(10)))
   docSnap.forEach((doc)=>{
       outputObject[2].push({
         name:doc.data().name,
