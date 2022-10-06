@@ -9,12 +9,37 @@ import lv2img from '../images/lv2.jpg'
 import lv3img from '../images/lv3.jpg'
 import TopBar from './TopBar.js'
 import Leaderboard from './Leaderboard';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import { app, db } from "../firebase-config";
+import {
+  set,
+  collection,
+  doc,
+  add,
+  update,
+  get,
+  data,
+  getDoc,
+} from "firebase/firestore";
+import {LeaderboardCall} from './FirebaseHandler';
 
 export default function LevelSelect() {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedLevel, setSelectedLevel] = useState(1);
+    const [currLeaderboard,setCurrLeaderboard]=useState('');
     const cardHeight='140';
+    let leaderboardList='';
+
+    async function asyncWrapper(){
+        let leaderboardList= await LeaderboardCall();
+        setCurrLeaderboard(leaderboardList)
+    }
+
+    useEffect(() => {
+        {asyncWrapper()}
+      }, []);
+
+      
   return (
     
     <Box
@@ -22,7 +47,12 @@ export default function LevelSelect() {
     flexDirection="column"
     height="100%"
     >
-        <Leaderboard modalOpen={modalOpen} setModalOpen={setModalOpen} selectedLevel={selectedLevel}/>
+        <Leaderboard 
+        modalOpen={modalOpen} 
+        setModalOpen={setModalOpen} 
+        selectedLevel={selectedLevel}
+        leaderboardList={currLeaderboard}
+        />
     {/* background */}
     <div style={{
         overflowY:"hidden",

@@ -6,8 +6,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function winScreen(){
-    return <Dialog open={true} >
+export default function winScreen(props){
+    return <Dialog open={props.gameWon} >
     <DialogTitle>Awesome Job!! 🎉🎉 </DialogTitle>
     <DialogContent>
       <DialogContentText>

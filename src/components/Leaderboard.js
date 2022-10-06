@@ -19,19 +19,32 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 
 export default function Leaderboard(props){
+
+  const PopulateLeaderboard=()=>{
+    console.log(props.leaderboardList)
+    let items=['Item 1','Item 2','Item 3','Item 4','Item 5'];
+    let itemList=items.map((item,index)=>{
+      return <li key={index}>{item}</li>
+    })
+
+    let playerList=props.leaderboardList[props.selectedLevel-1].map((el)=>{
+      return <ListItem><ListItemText primary={el.time} secondary={el.name} /></ListItem>
+    })
+
+    return (
+      <div>
+        {playerList}
+      </div>
+    )
+  }
+
     
 return <Dialog open={props.modalOpen} onClose={()=>props.setModalOpen(false)}>
         <DialogTitle>🏆 Leaderboard for Level {props.selectedLevel} </DialogTitle>
     <DialogContent>
       <DialogContentText>
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' ,}}>
-      <ListItem>
-        <ListItemText primary="356 s" secondary="Kenny" />
-      </ListItem>
-      <ListItem>
-        <ListItemText primary="132 s" secondary="Koni" />
-      </ListItem>
-      <ListItem><ListItemText primary="353 s" secondary="Kenderman" /></ListItem>
+      {PopulateLeaderboard()}
     </List>
       </DialogContentText>
     </DialogContent>

@@ -29,6 +29,7 @@ export default function Play(){
     const [testCoords, setTestCoords] = useState({x: 0, y: 0});
     const [menuOn, setMenuOn]=useState(false);
     const [isFound, setIsFound]=useState([false,false,false]);
+    const [gameWon, setGameWon]=useState(false);
 
       const mapClickHandler =(event)=>{
         setMenuOn(!menuOn)
@@ -60,7 +61,7 @@ export default function Play(){
     alignItems="sretch"
     justifyContent="stretch"
     height="100vh">
-      <WinScreen/>
+      <WinScreen gameWon={gameWon}/>
         <TopBar/>
         <Checklist levelID={levelID} isFound={isFound}/>
         <DebugDisplay txt={
