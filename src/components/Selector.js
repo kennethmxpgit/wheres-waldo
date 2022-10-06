@@ -16,6 +16,11 @@ export default function Selector(props){
         
         setTimeout(()=>{props.setMenuOn(false)},400)
         await HitChecker(levelID,target,x,y)
+        const tempArr=props.isFound
+        const targetIndex=parseInt(target)-1
+        if(await HitChecker(levelID,target,x,y)){
+            tempArr[targetIndex]=true}
+        console.log(tempArr)
     }
 
     //modifier so the small menu doesn't go out of the map container

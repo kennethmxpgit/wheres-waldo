@@ -59,7 +59,7 @@ export default function Play(){
     alignItems="sretch"
     justifyContent="stretch"
     height="100vh">
-      <WinScreen gameWon={gameWon}/>
+      <WinScreen gameWon={isFound[0]&&isFound[1]&&isFound[2]}/>
         <TopBar/>
         <Checklist levelID={levelID} isFound={isFound}/>
         <DebugDisplay txt={
@@ -91,7 +91,8 @@ export default function Play(){
             hitY={coords.y}
             setMenuOn={setMenuOn}
             levelID={levelID}
-            isFound={isFound}          
+            isFound={isFound}
+            setIsFound={setIsFound}         
             />
             <Box
         component="img"
