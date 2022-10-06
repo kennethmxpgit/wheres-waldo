@@ -1,8 +1,9 @@
 import { Box,Grid,Paper,Avatar } from '@mui/material';
-import Waldo from "../images/Waldo.jpg"
+import Waldo from "../images/Waldo.jpg";
+import { lvInfo } from './lvInfo';
 
 
-export default function Checklist(){
+export default function Checklist(props){
     return <Box
     width="100%"
     height="0"
@@ -22,9 +23,9 @@ export default function Checklist(){
 
             }}
         >
-            <Avatar src={Waldo}/>
-            <Avatar src={Waldo}/>
-            <Avatar src={Waldo}/>
+            <Avatar src={lvInfo[props.levelID].target1Img}/>
+            <Avatar src={lvInfo[props.levelID].target2Img}/>
+            <Avatar src={lvInfo[props.levelID].target3Img}/>
         </Box>
 
     </Box>

@@ -12,9 +12,9 @@ export default function Layout(){
         <div>
           <Box width="100vw" height="95vh">
             <Routes>
-              <Route exact path={'/'} element={<Home/>}/>
-              <Route exact path={'/level'} element={<LevelSelect/>}/>
-              <Route exact path={'/play'} element={<Play/>}/>
+              <Route  path={'/'} element={<Home/>}/>
+              <Route  path={'/level'} element={<LevelSelect/>}/>
+              <Route path={'/play/:id'} element={<Play/>}/>
             </Routes>
           </Box>
   

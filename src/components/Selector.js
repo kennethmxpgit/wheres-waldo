@@ -1,5 +1,6 @@
 import { Box,Button,Paper,Avatar } from '@mui/material';
 import Waldo from "../images/Waldo.jpg"
+import { lvInfo } from './lvInfo';
 
 
 export default function Selector(props){
@@ -31,14 +32,13 @@ export default function Selector(props){
         sx={{borderRadius:"0.5rem"}}
         >
             <Button onClick={clickHandler}>
-                <Avatar src={Waldo}
-                />
+                <Avatar src={lvInfo[props.levelID].target1Img}/>
             </Button>
-            <Button>
-                <Avatar src={Waldo}/>
+            <Button onClick={clickHandler}>
+                <Avatar src={lvInfo[props.levelID].target2Img}/>
             </Button>
-            <Button>
-                <Avatar src={Waldo}/>
+            <Button onClick={clickHandler}>
+                <Avatar src={lvInfo[props.levelID].target3Img}/>
             </Button>
 
         </Box>

@@ -11,21 +11,22 @@ import TopBar from './TopBar.js'
 import Selector from './Selector.js'
 import Checklist from './Checklist.js'
 import DebugDisplay from './DebugDisplay';
-import MouseListener from './MouseListener';
 import {useEffect, useState} from 'react';
-import { maxHeight } from '@mui/system';
+import {useParams} from 'react-router-dom';
+import { lvInfo } from './lvInfo';
+
 
 
 
 export default function Play(){
+  const params= useParams()
+  const levelID=params.id
+
+
     const [coords, setCoords] = useState({x: 0, y: 0});
     const [localCoords, setLocalCoords] = useState({x: 0, y: 0});
     const [testCoords, setTestCoords] = useState({x: 0, y: 0});
     const [menuOn, setMenuOn]=useState(false);
-    useEffect(() => {
-
-      }, []);
-
 
       const mapClickHandler =(event)=>{
         setMenuOn(!menuOn)
@@ -40,8 +41,7 @@ export default function Play(){
       });
       }
 
-
-
+      //mousemove detection for debugging
       const handleMouseMove = event => {
         const bounds = event.target.getBoundingClientRect()
         setTestCoords({
@@ -51,11 +51,6 @@ export default function Play(){
 
       };
 
-
-
-
-
-
     return <Box 
     display="flex"
     
@@ -64,7 +59,7 @@ export default function Play(){
     justifyContent="stretch"
     height="100vh">
         <TopBar/>
-        <Checklist/>
+        <Checklist levelID={levelID}/>
         <DebugDisplay txt={
             "Hit X:"+coords.x+" Y:"+coords.y
         }
@@ -85,15 +80,19 @@ export default function Play(){
         >
 
         <Box
-        
         overflow="auto"
         height="82vh"
-        
         >
-            <Selector menuVisible={menuOn} mouseX={localCoords.x} mouseY={localCoords.y} hitX={coords.x} hitY={coords.y} setMenuOn={setMenuOn}/>
+            <Selector 
+            menuVisible={menuOn} 
+            mouseX={localCoords.x} mouseY={localCoords.y} 
+            hitX={coords.x} hitY={coords.y} 
+            setMenuOn={setMenuOn}
+            levelID={levelID}          
+            />
             <Box
         component="img"
-        src={lv3img}
+        src={lvInfo[levelID].image}
         loading="eager"
         onMouseMove={handleMouseMove}
         onClick={mapClickHandler}
