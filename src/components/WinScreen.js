@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {saveToLeaderboard}  from './FirebaseHandler';
 import * as React from 'react';
 import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 
 
 
@@ -53,10 +54,10 @@ export default function WinScreen(props){
       />
     </DialogContent>
     <DialogActions>
-      <Button href="/#/level" >Go Back</Button>
+      <Button component={Link} to={"/level"}>Go Back</Button>
       <Button onClick={()=>{
         saveToLeaderboard(String(props.levelID),textState,props.finishTime)
-      }} href="/#/level">Save</Button>
+      }} component={Link} to={"/level"}>Save</Button>
     </DialogActions>
   </Dialog>
 }

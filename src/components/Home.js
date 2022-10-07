@@ -1,7 +1,7 @@
 import WaldoHome from '../images/waldohome.png'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
+import { Link } from "react-router-dom";
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 
@@ -27,7 +27,7 @@ export default function Home(homeImg){
         />
         
 
-<Button variant="contained" size="large" color="error" href="/#/level">Start Game</Button>
+<Button variant="contained" size="large" color="error" component={Link} to={"/level"}>Start Game</Button>
 <Link underline="none" href="#" color="black" margin="2%">
   <Box display="flex" alignItems="center" margin="1rem">
     <GitHubIcon fontSize="large" sx={{color:"black"}}/>kennethmxpgit

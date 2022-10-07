@@ -10,6 +10,7 @@ import lv3img from '../images/lv3.jpg'
 import TopBar from './TopBar.js'
 import Leaderboard from './Leaderboard';
 import {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom';
 import { app, db } from "../firebase-config";
 import {
   set,
@@ -93,7 +94,7 @@ export default function LevelSelect() {
 
             }}
             >
-        <CardActionArea href="/#/play/1">
+        <CardActionArea component={Link} to={"/play/1"}>
             <CardMedia
             component="img"
             height={cardHeight}
@@ -119,7 +120,7 @@ export default function LevelSelect() {
 
             <Grid item>
             <Card sx={{ maxWidth: 180 }}>
-        <CardActionArea href="/#/play/2">
+        <CardActionArea component={Link} to={"/play/2"}>
             <CardMedia
             component="img"
             height={cardHeight}
@@ -145,7 +146,7 @@ export default function LevelSelect() {
 
             <Grid item>
             <Card sx={{ maxWidth: 180 }}>
-        <CardActionArea href="/#/play/3">
+        <CardActionArea component={Link} to={"/play/3"}>
             <CardMedia
             component="img"
             height={cardHeight}
