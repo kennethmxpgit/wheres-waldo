@@ -78,7 +78,7 @@ export default function Play(){
       />
         <TopBar/>        
         <Checklist levelID={levelID} isFound={isFound}/>
-        <DebugDisplay txt={
+        {/* <DebugDisplay txt={
             "Hit X:"+coords.x+" Y:"+coords.y
         }
 
@@ -86,7 +86,7 @@ export default function Play(){
             " X : "+testCoords.x+
             " Y : "+testCoords.y
         }
-        />
+        /> */}
         <Box
         flexGrow="1"
         width="100vw"
