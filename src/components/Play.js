@@ -98,7 +98,9 @@ export default function Play(){
 
         <Box
         overflow="auto"
-        height="82vh"
+        height="100%"
+        p="0"
+        margin="0"
         >
             <Selector 
             menuVisible={menuOn} 
@@ -108,7 +110,7 @@ export default function Play(){
             setMenuOn={setMenuOn}
             levelID={levelID}
             isFound={isFound}
-            setIsFound={setIsFound}         
+            setIsFound={setIsFound}        
             />
             <Box
         component="img"
@@ -118,7 +120,7 @@ export default function Play(){
         onClick={mapClickHandler}
         borderRadius="1rem"      
         sx={{
-
+          height: { xs: "51rem", md: "51rem" },
         }}
         />
         </Box>

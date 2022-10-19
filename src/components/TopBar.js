@@ -50,28 +50,39 @@ import Checklist from './Checklist.js';
 
 export default function ButtonAppBar() {
   return (
-      <AppBar position="static" color="error">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+      <Box backgroundColor="#d32f2f" sx={{
+        zIndex:1,
+        height: { xs: "5rem", md: "12vh" },
+        display:"flex",
+        alignItems:"center",
+      }}>
           <Link to={"/"}>
           <Box
         component="img"
         sx={{
-          maxWidth: { xs: 100, md: 150 },
-          p:"0.5%"
+          position:"static",
+          height: { xs: "2.75rem", md: 60 },
+          left:"0px",
+          top:"2.5%",
+          p:"1% 1% 1% 25%",
+          boxSizing:"border-box",
         }}
         alt="Waldo welcoming"
         src={barLogo}      
         loading="eager"
         />
           </Link>
-
-          </Typography>
-
-          <Button href="https://github.com/kennethmxpgit/wheres-waldo">
-          <GitHubIcon fontSize="large" sx={{color:"white"}}/>
+          <Button href="https://github.com/kennethmxpgit/wheres-waldo"
+          sx={{
+            position:"static",
+            marginLeft:"auto",
+            top:"2.5%",
+            paddingRight:"2%"
+          }}>
+          <GitHubIcon fontSize="large" sx={{
+            height: { xs: "5rem", md: "5rem" },
+            color:"white"}}/>
           </Button>
-        </Toolbar>
-      </AppBar>
+      </Box>
   )
 }
